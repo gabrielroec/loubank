@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Pressable, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CustomButton from "../components/button/CustomButton";
 import { BlurView } from "expo-blur";
@@ -27,6 +27,27 @@ function KeypadButton({ number, onPress }: KeypadButtonProps) {
 export default function PasscodeEntry() {
   const [passcode, setPasscode] = useState<string>("");
   const maxLength = 5;
+
+  // Adicione o Animated.Value para controlar a opacidade
+  const [overlayOpacity] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    if (passcode.length === maxLength) {
+      // Anima a opacidade de 0 para 1
+      Animated.timing(overlayOpacity, {
+        toValue: 1,
+        duration: 300, // Duração da animação em milissegundos
+        useNativeDriver: true,
+      }).start();
+    } else {
+      // Anima a opacidade de 1 para 0
+      Animated.timing(overlayOpacity, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [passcode.length]);
 
   const handleNumberPress = (num: string) => {
     if (passcode.length < maxLength) {
@@ -90,22 +111,32 @@ export default function PasscodeEntry() {
         <Text className="text-yellow-400 text-sm">Não consegue fazer o login</Text>
       </Pressable>
       {passcode.length === 5 && (
-        <BlurView
-          intensity={4}
-          tint="dark"
-          experimentalBlurMethod="dimezisBlurView"
-          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, padding: 16 }}
+        <Animated.View
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            opacity: overlayOpacity, // Aplica a opacidade animada
+          }}
         >
           <View className="w-full h-full flex items-center justify-center ">
             <CustomButton
               variant="primary"
-              title="Login"
-              className="py-4 w-3/4 shadow-2xl"
+              title="Iniciar Demo"
+              className="py-6 w-[80%] relative z-50"
               onPress={() => router.push("/login")}
               fullWidth={true}
             />
+            <BlurView
+              intensity={10}
+              tint="dark"
+              experimentalBlurMethod="dimezisBlurView"
+              style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 5 }}
+            ></BlurView>
           </View>
-        </BlurView>
+        </Animated.View>
       )}
     </View>
   );
