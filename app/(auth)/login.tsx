@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, Pressable, Animated } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CustomButton from "../components/button/CustomButton";
 import { BlurView } from "expo-blur";
-import { useRouter } from "expo-router"; // Use useRouter em vez de router diretamente
+import { router } from "expo-router";
 
 interface KeypadButtonProps {
   number: string;
@@ -27,29 +27,6 @@ function KeypadButton({ number, onPress }: KeypadButtonProps) {
 export default function PasscodeEntry() {
   const [passcode, setPasscode] = useState<string>("");
   const maxLength = 5;
-
-  // Adicione o Animated.Value para controlar a opacidade
-  const [overlayOpacity] = useState(new Animated.Value(0));
-
-  const router = useRouter(); // Corrige a importação do router
-
-  useEffect(() => {
-    if (passcode.length === maxLength) {
-      // Anima a opacidade de 0 para 1
-      Animated.timing(overlayOpacity, {
-        toValue: 1,
-        duration: 300, // Duração da animação em milissegundos
-        useNativeDriver: true,
-      }).start();
-    } else {
-      // Anima a opacidade de 1 para 0
-      Animated.timing(overlayOpacity, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [passcode.length]);
 
   const handleNumberPress = (num: string) => {
     if (passcode.length < maxLength) {
@@ -112,20 +89,14 @@ export default function PasscodeEntry() {
       <Pressable className="mt-8">
         <Text className="text-yellow-400 text-sm">Não consegue fazer o login</Text>
       </Pressable>
-
-      {/* Animated Overlay */}
-      <Animated.View
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          opacity: overlayOpacity, // Aplica a opacidade animada
-        }}
-      >
-        <BlurView intensity={100} tint="dark" style={{ flex: 1, padding: 16 }}>
-          <View className="w-full h-full flex items-center justify-center">
+      {passcode.length === 5 && (
+        <BlurView
+          intensity={4}
+          tint="dark"
+          experimentalBlurMethod="dimezisBlurView"
+          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, padding: 16 }}
+        >
+          <View className="w-full h-full flex items-center justify-center ">
             <CustomButton
               variant="primary"
               title="Login"
@@ -135,7 +106,7 @@ export default function PasscodeEntry() {
             />
           </View>
         </BlurView>
-      </Animated.View>
+      )}
     </View>
   );
 }
