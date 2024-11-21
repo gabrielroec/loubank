@@ -1,19 +1,29 @@
 import { View, Text, Pressable, Image } from "react-native";
 import React from "react";
 
-const HeaderBar = () => {
+interface User {
+  name: string;
+  avatarUrl: any;
+}
+
+const HeaderBar = ({ name, avatarUrl }: User) => {
   return (
-    <View className="relative w-full">
-      <Pressable className="w-12 h-12 bg-red-500 rounded-full ml-10">
-        <Image
-          source={require("../../../assets/images/Home/icon/avatar.png")}
-          className="w-full h-full"
-        />
-      </Pressable>
-      <Image
-        className="absolute right-1/2 translate-x-1/2"
-        source={require("../../../assets/images/logo.png")}
-      />
+    <View className=" w-full flex flex-row items-center justify-between px-3">
+      <View className="flex flex-row items-center">
+        <Pressable className="w-12 h-12 rounded-full">
+          <Image source={avatarUrl} className="w-full h-full" />
+        </Pressable>
+        <View>
+          <Text className="text-slate-400 text-sm bottom-0 right-0 ml-2 ">
+            Bem-vindo,
+          </Text>
+          <Text className="text-white text-sm bottom-0 right-0 ml-2 font-bold">
+            {name}
+          </Text>
+        </View>
+      </View>
+
+      <Image source={require("../../../assets/images/logo.png")} />
     </View>
   );
 };

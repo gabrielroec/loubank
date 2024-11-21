@@ -1,0 +1,56 @@
+{
+  "user": {
+    "id": "1",
+    "name": "João Silva",
+    "email": "joao.silva@email.com",
+    "avatarUrl": "avatar.png",
+    "accounts": [
+      {
+        "id": "1",
+        "type": "Salary",
+        "balance": 2230,
+        "bank": "LouBank",
+        "provider": "Visa",
+        "cardNumber": "4916123456786917",
+        "cardType": "Debit",
+        "accountNumber": "123456-7",
+        "agency": "001",
+        "currency": "BRL",
+        "cardHolderName": "João Silva",
+        "expirationDate": "12/26",
+        "cvv": "123"
+      },
+      {
+        "id": "2",
+        "type": "Savings",
+        "balance": 5566,
+        "bank": "LouBank",
+        "provider": "Visa",
+        "cardNumber": "4532123456784552",
+        "cardType": "Debit",
+        "accountNumber": "765432-1",
+        "agency": "002",
+        "currency": "BRL",
+        "cardHolderName": "João Silva",
+        "expirationDate": "08/27",
+        "cvv": "456"
+      },
+      {
+        "id": "3",
+        "type": "Credit",
+        "balance": 5000,
+        "bank": "LouBank",
+        "provider": "MasterCard",
+        "cardNumber": "5200123456781234",
+        "cardType": "Credit",
+        "accountNumber": "987654-3",
+        "agency": "003",
+        "currency": "BRL",
+        "cardHolderName": "João Silva",
+        "expirationDate": "03/28",
+        "cvv": "789"
+      }
+    ],
+    "totalBalance": 7896
+  }
+}

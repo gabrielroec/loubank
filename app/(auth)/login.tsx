@@ -52,7 +52,7 @@ export default function PasscodeEntry() {
       setIsLoading(true);
       setTimeout(() => {
         router.push("/home");
-      }, 3000);
+      }, 1000);
     }
   }, [passcode]);
 
