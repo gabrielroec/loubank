@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import HeaderBar from "../components/headerBar/HeaderBar";
 import { fetchUserData, fetchAccounts, fetchTotalBalance } from "../../api";
 import BalanceHome from "../components/balanceHome/BalanceHome";
+import UserCards from "../components/userCards/UserCards";
 
 const statusBarHeight = Constants.statusBarHeight;
 
@@ -44,6 +45,7 @@ const Index = () => {
       >
         <HeaderBar name={userData.name} avatarUrl={avatarUrl} />
         <BalanceHome balance={totalBalance} />
+        <UserCards />
       </ScrollView>
       <Image
         source={require("../../assets/images/Home/Background.png")}
